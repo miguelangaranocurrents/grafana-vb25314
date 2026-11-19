@@ -140,9 +140,10 @@ interface EditorProps {
   hideRefresh?: boolean;
   hideStaticOptions?: boolean;
   hidePreview?: boolean;
+  onRunQuery?: () => void;
 }
 
-export function Editor({ variable, hideRefresh, hideStaticOptions, hidePreview }: EditorProps) {
+export function Editor({ variable, hideRefresh, hideStaticOptions, hidePreview, onRunQuery }: EditorProps) {
   const {
     datasource: datasourceRef,
     sort,
@@ -188,9 +189,11 @@ export function Editor({ variable, hideRefresh, hideStaticOptions, hidePreview }
   };
   const onRegExChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
     variable.setState({ regex: event.currentTarget.value });
+    onRunQuery?.();
   };
   const onRegexApplyToChange = (event: VariableRegexApplyTo) => {
     variable.setState({ regexApplyTo: event });
+    onRunQuery?.();
   };
   const onSortChange = (sort: SelectableValue<VariableSort>) => {
     variable.setState({ sort: sort.value });

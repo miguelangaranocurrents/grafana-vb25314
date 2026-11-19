@@ -158,7 +158,15 @@ export function ModalEditor(props: ModalEditorProps) {
                 />
               </TabsBar>
               <div className={styles.tabContent}>
-                {activeTab === 'query' && <Editor variable={draftVariable} hideRefresh hideStaticOptions hidePreview />}
+                {activeTab === 'query' && (
+                  <Editor
+                    variable={draftVariable}
+                    hideRefresh
+                    hideStaticOptions
+                    hidePreview
+                    onRunQuery={onRunQuery}
+                  />
+                )}
                 {activeTab === 'staticOptions' && (
                   <VariableOptionsSpreadsheet
                     options={options}

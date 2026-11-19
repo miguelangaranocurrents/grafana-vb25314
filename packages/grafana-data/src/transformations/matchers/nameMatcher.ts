@@ -100,6 +100,8 @@ const multipleFieldNamesMatcher: FieldMatcherInfo<ByNamesMatcherOptions> = {
   },
 };
 
+const LEGACY_TIME_FIELD_NAMES = ['Time', 'time'];
+
 // In an effort to support migrating to a consistent data contract, the
 // naming conventions need to get normalized. However, many existing setups
 // exist that would no longer match names if that changes.  This injects
@@ -116,7 +118,9 @@ function fieldNameFallback(fields: Set<string>) {
     };
   } else if (fields.has('Time') || fields.has('time')) {
     fallback = (field: Field, frame: DataFrame) => {
-      return frame.meta?.typeVersion == null && field.type === FieldType.time;
+      return (
+        frame.meta?.typeVersion == null && field.type === FieldType.time && LEGACY_TIME_FIELD_NAMES.includes(field.name)
+      );
     };
   }
 
